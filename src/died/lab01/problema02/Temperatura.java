@@ -4,59 +4,88 @@ public class Temperatura {
 	Double grados;
 	Escala escala;
 	
-	public Temperatura() {
-		grados=0d;
-		escala= Escala.CELCIUS;
-	}
+	
 	public Temperatura(Double unNumero , Escala laEscala) {
-		grados= unNumero;
-		escala= laEscala;
+		this.grados= unNumero;
+		this.escala= laEscala;
+	}
+	public Temperatura() {
+		this(0d, Escala.CELCIUS);
 	}
 	
 	
 	@Override
 	public String toString() {
-		return  grados + " " + escala;
+		switch(this.escala) {
+		case CELCIUS:
+			return  this.grados + " " + "C°";
+		case FAHRENHEIT:
+			return  this.grados + " " + "°F";
+		default: return  this.grados + " " + "C°";
+		}
+		
 	}
 	
 	public Double asCelcius() {
-		if(this.escala != Escala.CELCIUS) {
-			return ((grados-32d) * (5d/9d) );
+		switch(this.escala) {
+		case CELCIUS:
+			return this.grados;
+		case FAHRENHEIT:
+			return ((this.grados-32d) * (5d/9d) );
+		default: return this.grados;
 		}
-		else return grados;
+		
 	}
 	
 	public Double asFahrenheit() {
-		if(this.escala != Escala.FAHRENHEIT) {
-			return ((grados * (9d/5d) ) +32);
+		switch(this.escala) {
+		case CELCIUS:
+			return ((this.grados * (9d/5d) ) +32);
+		case FAHRENHEIT:
+			return this.grados;
+		default: return this.grados;
 		}
-		else return grados;
+		
 	}
 	
 	public void aumentar(Temperatura temperatura) {
+		switch(this.escala) {
+		case CELCIUS:
+			if(temperatura.asCelcius() >= 0d) this.grados+= temperatura.asCelcius();
+			else this.grados-= temperatura.asCelcius();
+			break;
+		case FAHRENHEIT:
+			if(temperatura.asFahrenheit() >= 0d) this.grados+=temperatura.asFahrenheit();
+			else this.grados-= temperatura.asFahrenheit();
+			break;
+		default: return;
+		}
 		
-		if(escala==Escala.CELCIUS) {
-			if(temperatura.asCelcius() >= 0d) grados+= temperatura.asCelcius();
-			else grados-= temperatura.asCelcius();
-		}
-		else {
-			if(temperatura.asFahrenheit() >= 0d) grados+=temperatura.asFahrenheit();
-			else grados-= temperatura.asFahrenheit();
-		}
+		
 	}
 	
 	
 public void disminuir(Temperatura temperatura) {
+		switch(this.escala) {
+		case CELCIUS:
+		if(temperatura.asCelcius() >= 0d) this.grados-= temperatura.asCelcius();
+			else this.grados+= temperatura.asCelcius();
+			break;
+		case FAHRENHEIT:
+			if(temperatura.asFahrenheit() >= 0d) this.grados-=temperatura.asFahrenheit();
+			else this.grados+= temperatura.asFahrenheit();
+			break;
+		default: return;
+		}
 		
-		if(escala==Escala.CELCIUS) {
-			if(temperatura.asCelcius() >= 0d) grados-= temperatura.asCelcius();
-			else grados+= temperatura.asCelcius();
-		}
-		else {
-			if(temperatura.asFahrenheit() >= 0d) grados-=temperatura.asFahrenheit();
-			else grados+= temperatura.asFahrenheit();
-		}
 	}
+
+public boolean esMayorQue(Temperatura otraTemp) {
+	if(this.asCelcius()>otraTemp.asCelcius()) return true;
+	else return false;
+}
+
+
 	
 	
 }

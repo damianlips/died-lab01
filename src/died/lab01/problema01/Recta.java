@@ -16,8 +16,7 @@ public class Recta {
 		punto2=segundo;
 	}
 	public Recta() {
-		punto1= new Punto(0f,0f);
-		punto2= new Punto(1f,1f);
+		this((new Punto(0f,0f)), (new Punto(1f,1f)));
 		
 	}
 	
